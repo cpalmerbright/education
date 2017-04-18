@@ -1,15 +1,12 @@
 class School < ApplicationRecord
   has_many :teachers
-  has_many :students
   validates :name, presence: true
 
   def students
-    student_list = []
-    teachers.each do |teacher|
-      teacher.students.each do |student|
-        student_list << student
+    teacher.all.each_with_object([]) do |t, array|
+      t.students.each do |s|
+        array << s
       end
     end
-    student_list
   end
 end
